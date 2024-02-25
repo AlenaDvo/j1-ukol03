@@ -6,9 +6,8 @@ package cz.czechitas.ukol3;
 public class HlavniProgram {
 
     public static void main(String... args) {
-        //TODO tady bude váš kód - vytvoření instance třídy Pocitac, zapnutí, vpynutí, výpis hodnot.
 
-        System.out.println("Program spuštěn.");
+        System.out.println("Program spusten.");
 
         // vytvoreni procesoru
         Procesor procesor1 = new Procesor();
@@ -21,6 +20,7 @@ public class HlavniProgram {
         Disk disk1 = new Disk();
         disk1.setKapacita(475_000_000_000L);
         disk1.setVyuziteMisto(400_000_000_000L);
+        disk1.setVolneMisto();
         // test toString disku
         System.out.println(disk1);
 
@@ -43,11 +43,28 @@ public class HlavniProgram {
 
         // zapnuti pocitace
         pocitac1.zapniSe();
-        // test druheho zapnuti pocitace
+        // test opetovneho zapnuti zapnuteho pocitace
         pocitac1.zapniSe();
         // vypnuti pocitace
         pocitac1.vypniSe();
-        // test druheho vypnuti pocitace
+        // test opetovneho vypnuti vypnuteho pocitace
         pocitac1.vypniSe();
+
+        // test zapisu pri vypnutem pocitaci
+        pocitac1.vytvorSouborOVelikosti(100_000_000_000L);
+        // test zapisu prilis velkeho souboru
+        pocitac1.zapniSe();
+        pocitac1.vytvorSouborOVelikosti(100_000_000_000L);
+        // test zapisu souboru, ktery se na disk vejde
+        pocitac1.vytvorSouborOVelikosti(100_000L);
+
+        // test vymazu pri vypnutem pocitaci
+        pocitac1.vypniSe();
+        pocitac1.vymazSouboryOVelikosti(100_000_000_000L);
+        // test vymazu prilis velkeho souboru
+        pocitac1.zapniSe();
+        pocitac1.vymazSouboryOVelikosti(800_000_000_000L);
+        // test vymazu souboru, ktery ma mensi velikost nez vyuzite misto
+        pocitac1.vymazSouboryOVelikosti(100_000L);
     }
 }

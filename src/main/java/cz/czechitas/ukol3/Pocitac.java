@@ -43,8 +43,6 @@ public class Pocitac {
         return jeZapnuty;
     }
 
-    ;
-
     public void zapniSe() {
         if (cpu == null) {
             System.err.println("Pocitac nelze zapnout, nema zadny procesor.");
@@ -65,7 +63,7 @@ public class Pocitac {
     }
 
     public void vypniSe() {
-        if (!jeZapnuty) {
+        if (!jeZapnuty()) {
             return;
         } else {
             jeZapnuty = false;
@@ -73,6 +71,32 @@ public class Pocitac {
         }
     }
 
-    ;
+    public void vytvorSouborOVelikosti(long velikost) {
+        if (!jeZapnuty()) {
+            System.err.println("Pocitac neni zapnuty, nelze na nej zapisovat.");
+        } else {
+            if (pevnyDisk.getVolneMisto() < velikost) {
+                System.err.println("Nemohu zapsat soubor o velikosti " + velikost + ", protoze na disku pro nej neni misto.");
+            } else {
+                pevnyDisk.setVyuziteMisto(pevnyDisk.getVyuziteMisto() + velikost);
+                pevnyDisk.setVolneMisto();
+                System.out.println("Soubor o velikosti " + velikost + " zapsan na disk.");
+            }
+        }
+    }
 
+
+    public void vymazSouboryOVelikosti(long velikost) {
+        if (!jeZapnuty()) {
+            System.err.println("Pocitac neni zapnuty, nelze z nej mazat.");
+        } else {
+            if (pevnyDisk.getVyuziteMisto() > velikost) {
+                pevnyDisk.setVyuziteMisto(pevnyDisk.getVyuziteMisto() - velikost);
+                pevnyDisk.setVolneMisto();
+                System.out.println("Soubor o velikosti " + velikost + " smazan.");
+            } else {
+                System.err.println("Nelze smazat soubor vetsi, nez je vyuzite misto.");
+            }
+        }
+    }
 }

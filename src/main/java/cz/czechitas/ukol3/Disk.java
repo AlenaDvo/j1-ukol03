@@ -4,6 +4,16 @@ public class Disk {
     private long kapacita;
     private long vyuziteMisto;
 
+    private long volneMisto;
+
+    public long getVolneMisto() {
+        return volneMisto;
+    }
+
+    public void setVolneMisto() {
+        this.volneMisto = kapacita - vyuziteMisto;
+    }
+
     public long getKapacita() {
         return kapacita;
     }
