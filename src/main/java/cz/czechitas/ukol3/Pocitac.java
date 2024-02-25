@@ -6,6 +6,16 @@ public class Pocitac {
     private Pamet ram;
     private Disk pevnyDisk;
 
+    private Disk druhyDisk;
+
+    public Disk getDruhyDisk() {
+        return druhyDisk;
+    }
+
+    public void setDruhyDisk(Disk druhyDisk) {
+        this.druhyDisk = druhyDisk;
+    }
+
     public Procesor getCpu() {
         return cpu;
     }
@@ -33,9 +43,9 @@ public class Pocitac {
     @Override
     public String toString() {
         if (this.jeZapnuty) {
-            return "Pocitac ma: procesor " + cpu + ", pamet " + ram + ", disk " + pevnyDisk + " a je zapnuty.";
+            return "Pocitac ma: " + cpu + ", " + ram + ", " + pevnyDisk + ", druhy " + druhyDisk + " a je zapnuty.";
         } else {
-            return "Pocitac ma: procesor " + cpu + ", pamet " + ram + ", disk " + pevnyDisk + " a neni zapnuty.";
+            return "Pocitac ma: " + cpu + ", " + ram + ", " + pevnyDisk + ", druhy " + druhyDisk + " a neni zapnuty.";
         }
     }
 
@@ -75,12 +85,19 @@ public class Pocitac {
         if (!jeZapnuty()) {
             System.err.println("Pocitac neni zapnuty, nelze na nej zapisovat.");
         } else {
-            if (pevnyDisk.getVolneMisto() < velikost) {
-                System.err.println("Nemohu zapsat soubor o velikosti " + velikost + ", protoze na disku pro nej neni misto.");
-            } else {
+            // je misto na prvnim disku
+            if (pevnyDisk.getVolneMisto() > velikost) {
                 pevnyDisk.setVyuziteMisto(pevnyDisk.getVyuziteMisto() + velikost);
                 pevnyDisk.setVolneMisto();
-                System.out.println("Soubor o velikosti " + velikost + " zapsan na disk.");
+                System.out.println("Soubor o velikosti " + velikost + " zapsan na pevny " + pevnyDisk + ".");
+            // je misto na druhem disku
+            } else if (druhyDisk.getVolneMisto() > velikost) {
+                druhyDisk.setVyuziteMisto(druhyDisk.getVyuziteMisto() + velikost);
+                druhyDisk.setVolneMisto();
+                System.out.println("Soubor o velikosti " + velikost + " zapsan na druhy " + druhyDisk + ".");
+            // neni misto nikde
+            } else {
+                System.err.println("Nemohu zapsat soubor o velikosti " + velikost + ", protoze na ani jednom disku pro nej neni misto.");
             }
         }
     }
@@ -90,12 +107,19 @@ public class Pocitac {
         if (!jeZapnuty()) {
             System.err.println("Pocitac neni zapnuty, nelze z nej mazat.");
         } else {
+            // smazeme z prvniho disku
             if (pevnyDisk.getVyuziteMisto() > velikost) {
                 pevnyDisk.setVyuziteMisto(pevnyDisk.getVyuziteMisto() - velikost);
                 pevnyDisk.setVolneMisto();
-                System.out.println("Soubor o velikosti " + velikost + " smazan.");
+                System.out.println("Soubor o velikosti " + velikost + " smazan z pevneho disku: " + pevnyDisk +".");
+            // smazeme z druheho disku
+            } else if (druhyDisk.getVyuziteMisto() > velikost) {
+                druhyDisk.setVyuziteMisto(druhyDisk.getVyuziteMisto() - velikost);
+                druhyDisk.setVolneMisto();
+                System.out.println("Soubor o velikosti " + velikost + " smazan z druheho disku: " + druhyDisk + ".");
+            // nelze smazat odnikud
             } else {
-                System.err.println("Nelze smazat soubor vetsi, nez je vyuzite misto.");
+                System.err.println("Nelze smazat soubor vetsi, nez je vyuzite misto ani na jednom disku.");
             }
         }
     }

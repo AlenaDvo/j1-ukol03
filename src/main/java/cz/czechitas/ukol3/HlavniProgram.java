@@ -24,6 +24,14 @@ public class HlavniProgram {
         // test toString disku
         System.out.println(disk1);
 
+        // vytvoreni druheho disku
+        Disk disk2 = new Disk();
+        disk2.setKapacita(475_000_000_000L);
+        disk2.setVyuziteMisto(0L);
+        disk2.setVolneMisto();
+        // test toSting druheho disku
+        System.out.println(disk2);
+
         // vytvoreni pameti
         Pamet pamet1 = new Pamet();
         pamet1.setKapacita(16_000_000_000L);
@@ -38,6 +46,7 @@ public class HlavniProgram {
         pocitac1.setCpu(procesor1);
         pocitac1.setRam(pamet1);
         pocitac1.setPevnyDisk(disk1);
+        pocitac1.setDruhyDisk(disk2);
         // test toString pocitace
         System.out.println(pocitac1);
 
@@ -54,9 +63,11 @@ public class HlavniProgram {
         pocitac1.vytvorSouborOVelikosti(100_000_000_000L);
         // test zapisu prilis velkeho souboru
         pocitac1.zapniSe();
-        pocitac1.vytvorSouborOVelikosti(100_000_000_000L);
+        pocitac1.vytvorSouborOVelikosti(800_000_000_000L);
         // test zapisu souboru, ktery se na disk vejde
         pocitac1.vytvorSouborOVelikosti(100_000L);
+        // test zapisu na druhy disk
+        pocitac1.vytvorSouborOVelikosti(100_000_000_000L);
 
         // test vymazu pri vypnutem pocitaci
         pocitac1.vypniSe();
@@ -64,7 +75,9 @@ public class HlavniProgram {
         // test vymazu prilis velkeho souboru
         pocitac1.zapniSe();
         pocitac1.vymazSouboryOVelikosti(800_000_000_000L);
-        // test vymazu souboru, ktery ma mensi velikost nez vyuzite misto
-        pocitac1.vymazSouboryOVelikosti(100_000L);
+        // test vymazu souboru, ktery ma mensi velikost nez vyuzite misto na prvnim disku
+        pocitac1.vymazSouboryOVelikosti(400_000_000_000L);
+        // test vymazu souboru, ktery ma mensi velikost nez vyuzite misto na druhem disku
+        pocitac1.vymazSouboryOVelikosti(100_000_000L);
     }
 }
